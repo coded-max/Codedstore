@@ -1,0 +1,137 @@
+<!DOCTYPE html><html>
+<head>
+  <title>CODEDSTORE</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+    }header {
+  background: black;
+  color: white;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.banner {
+  background: linear-gradient(to right, black, #222);
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.banner p {
+  color: yellow;
+  margin-top: 5px;
+}
+
+.container {
+  padding: 15px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.product {
+  background: white;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.product img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.product h3 {
+  font-size: 14px;
+  margin: 10px 0 5px;
+}
+
+.price {
+  font-weight: bold;
+  color: black;
+}
+
+button {
+  margin-top: 8px;
+  width: 100%;
+  padding: 8px;
+  border: none;
+  background: orange;
+  color: white;
+  border-radius: 5px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: darkorange;
+}
+
+footer {
+  text-align: center;
+  padding: 15px;
+  font-size: 12px;
+  color: gray;
+}
+
+  </style>
+</head><body><header>
+  <h1>CODEDSTORE</h1>
+  <span>🛒</span>
+</header><div class="banner">
+  <h2>Best Deals on Electronics</h2>
+  <p>Smart Tech. Smart Living.</p>
+</div><div class="container">
+  <div class="grid"><div class="product">
+  <img src="https://via.placeholder.com/300">
+  <h3>Oraimo Power Bank 20000mAh</h3>
+  <p class="price">₦18,000</p>
+  <button onclick="order('Power Bank')">Order</button>
+</div>
+
+<div class="product">
+  <img src="https://via.placeholder.com/300">
+  <h3>Wireless Earbuds</h3>
+  <p class="price">₦12,000</p>
+  <button onclick="order('Earbuds')">Order</button>
+</div>
+
+<div class="product">
+  <img src="https://via.placeholder.com/300">
+  <h3>Fast Charger</h3>
+  <p class="price">₦5,000</p>
+  <button onclick="order('Charger')">Order</button>
+</div>
+
+<div class="product">
+  <img src="https://via.placeholder.com/300">
+  <h3>Smart Watch</h3>
+  <p class="price">₦25,000</p>
+  <button onclick="order('Smart Watch')">Order</button>
+</div>
+
+  </div>
+</div><footer>
+  © 2026 CODEDSTORE - All rights reserved
+</footer><script>
+function order(product) {
+  let number = "2348114707032";
+  let message = "Hello CODEDSTORE,%0AI want to order:%0AProduct: " + product;
+  window.open("https://wa.me/" + number + "?text=" + message);
+}
+</script></body>
+</html>
