@@ -1,137 +1,304 @@
-<!DOCTYPE html><html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <title>CODEDSTORE</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-    }header {
-  background: black;
-  color: white;
-  padding: 15px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CODEDSTORE</title>
+
+<style>
+body { margin:0; font-family:Arial; background:#f5f5f5; }
+
+header {
+  background:black;
+  color:white;
+  text-align:center;
+  padding:20px;
 }
 
-header h1 {
-  margin: 0;
-  font-size: 20px;
+.search {
+  width:90%;
+  margin:10px auto;
+  display:block;
+  padding:12px;
+  border-radius:10px;
+  border:none;
 }
 
-.banner {
-  background: linear-gradient(to right, black, #222);
-  color: white;
-  padding: 20px;
-  text-align: center;
+/* PRODUCTS */
+.products {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  padding:10px;
 }
 
-.banner p {
-  color: yellow;
-  margin-top: 5px;
+.card {
+  background:white;
+  padding:10px;
+  border-radius:12px;
 }
 
-.container {
-  padding: 15px;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-}
-
-.product {
-  background: white;
-  border-radius: 10px;
-  padding: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.product img {
-  width: 100%;
-  border-radius: 10px;
-}
-
-.product h3 {
-  font-size: 14px;
-  margin: 10px 0 5px;
-}
-
-.price {
-  font-weight: bold;
-  color: black;
+.card img {
+  width:100%;
+  height:140px;
+  object-fit:cover;
+  border-radius:10px;
 }
 
 button {
-  margin-top: 8px;
-  width: 100%;
-  padding: 8px;
-  border: none;
-  background: orange;
-  color: white;
-  border-radius: 5px;
-  font-size: 12px;
-  cursor: pointer;
+  background:orange;
+  border:none;
+  padding:10px;
+  width:100%;
+  border-radius:8px;
+  color:white;
+  margin-top:5px;
 }
 
-button:hover {
-  background: darkorange;
+/* CART BUTTON */
+.cart-btn {
+  position:fixed;
+  top:15px;
+  right:15px;
+  background:orange;
+  padding:10px 15px;
+  border-radius:30px;
+  color:white;
+  cursor:pointer;
 }
 
-footer {
-  text-align: center;
-  padding: 15px;
-  font-size: 12px;
-  color: gray;
+#cartCount {
+  background:red;
+  padding:2px 8px;
+  border-radius:50%;
+  margin-left:5px;
 }
 
-  </style>
-</head><body><header>
-  <h1>CODEDSTORE</h1>
-  <span>🛒</span>
-</header><div class="banner">
-  <h2>Best Deals on Electronics</h2>
+/* CART PANEL */
+.cart {
+  position:fixed;
+  bottom:-100%;
+  left:0;
+  width:100%;
+  height:65%;
+  background:black;
+  color:white;
+  padding:15px;
+  transition:0.3s;
+  overflow:auto;
+}
+
+.cart.open { bottom:0; }
+
+.close-btn {
+  background:red;
+  padding:5px 10px;
+  border:none;
+  border-radius:5px;
+  color:white;
+  float:right;
+}
+
+.cart-item {
+  margin:10px 0;
+  border-bottom:1px solid #444;
+  padding-bottom:8px;
+}
+
+.qty-btn {
+  background:orange;
+  border:none;
+  padding:5px 10px;
+  margin:3px;
+  border-radius:5px;
+}
+
+/* CHECKOUT */
+.checkout {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:white;
+  display:none;
+  padding:20px;
+}
+
+input, select {
+  width:100%;
+  padding:10px;
+  margin:5px 0;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h2>CODEDSTORE</h2>
   <p>Smart Tech. Smart Living.</p>
-</div><div class="container">
-  <div class="grid"><div class="product">
-  <img src="https://via.placeholder.com/300">
-  <h3>Oraimo Power Bank 20000mAh</h3>
-  <p class="price">₦18,000</p>
-  <button onclick="order('Power Bank')">Order</button>
+</header>
+
+<input class="search" placeholder="Search products..." oninput="searchProducts(this.value)">
+
+<div class="products" id="productList"></div>
+
+<!-- CART BUTTON -->
+<div class="cart-btn" onclick="toggleCart()">
+🛒 <span id="cartCount">0</span>
 </div>
 
-<div class="product">
-  <img src="https://via.placeholder.com/300">
-  <h3>Wireless Earbuds</h3>
-  <p class="price">₦12,000</p>
-  <button onclick="order('Earbuds')">Order</button>
+<!-- CART -->
+<div class="cart" id="cartBox">
+  <button class="close-btn" onclick="toggleCart()">Close</button>
+  <h3>Your Cart</h3>
+
+  <div id="cartItems"></div>
+  <h3 id="total">Total: ₦0</h3>
+
+  <button onclick="openCheckout()">Checkout</button>
 </div>
 
-<div class="product">
-  <img src="https://via.placeholder.com/300">
-  <h3>Fast Charger</h3>
-  <p class="price">₦5,000</p>
-  <button onclick="order('Charger')">Order</button>
+<!-- CHECKOUT -->
+<div class="checkout" id="checkoutBox">
+  <h2>Checkout</h2>
+
+  <input id="name" placeholder="Full Name">
+  <input id="phone" placeholder="Phone Number">
+  <input id="address" placeholder="Delivery Address">
+
+  <select id="delivery">
+    <option value="2000">Lagos Delivery - ₦2000</option>
+    <option value="0">Pickup - Free</option>
+  </select>
+
+  <button onclick="placeOrder()">Place Order</button>
+  <button onclick="closeCheckout()" style="background:red;">Cancel</button>
 </div>
 
-<div class="product">
-  <img src="https://via.placeholder.com/300">
-  <h3>Smart Watch</h3>
-  <p class="price">₦25,000</p>
-  <button onclick="order('Smart Watch')">Order</button>
-</div>
+<script>
+let products = [
+  {name:"Power Bank", price:18000, img:"Snapchat-350993081.jpg"},
+  {name:"Earbuds", price:12000, img:"Snapchat-350993081.jpg"},
+  {name:"Charger", price:5000, img:"Snapchat-350993081.jpg"},
+  {name:"Smart Watch", price:25000, img:"Snapchat-350993081.jpg"}
+];
 
-  </div>
-</div><footer>
-  © 2026 CODEDSTORE - All rights reserved
-</footer><script>
-function order(product) {
-  let number = "2348114707032";
-  let message = "Hello CODEDSTORE,%0AI want to order:%0AProduct: " + product;
-  window.open("https://wa.me/" + number + "?text=" + message);
+let cart = [];
+
+/* DISPLAY */
+function displayProducts(list){
+  let html="";
+  list.forEach((p,i)=>{
+    html+=`
+      <div class="card">
+        <img src="${p.img}">
+        <h4>${p.name}</h4>
+        <p>₦${p.price}</p>
+        <button onclick="addToCart(${i})">Add to Cart</button>
+      </div>
+    `;
+  });
+  productList.innerHTML = html;
 }
-</script></body>
+
+/* ADD */
+function addToCart(i){
+  let item = cart.find(p=>p.name===products[i].name);
+  if(item){ item.qty++; }
+  else { cart.push({...products[i], qty:1}); }
+  updateCart();
+}
+
+/* INCREASE */
+function increase(i){
+  cart[i].qty++;
+  updateCart();
+}
+
+/* DECREASE */
+function decrease(i){
+  if(cart[i].qty > 1) cart[i].qty--;
+  else cart.splice(i,1);
+  updateCart();
+}
+
+/* UPDATE CART */
+function updateCart(){
+  let html="";
+  let total=0;
+  let count=0;
+
+  cart.forEach((p,i)=>{
+    total += p.price * p.qty;
+    count += p.qty;
+
+    html+=`
+      <div class="cart-item">
+        ${p.name}<br>
+        ₦${p.price} x ${p.qty} = ₦${p.price*p.qty}<br>
+
+        <button class="qty-btn" onclick="increase(${i})">+</button>
+        <button class="qty-btn" onclick="decrease(${i})">-</button>
+      </div>
+    `;
+  });
+
+  cartItems.innerHTML = html || "Cart is empty";
+  totalText = "Total: ₦" + total;
+  document.getElementById("total").innerText = totalText;
+
+  document.getElementById("cartCount").innerText = count;
+}
+
+/* TOGGLE CART */
+function toggleCart(){
+  cartBox.classList.toggle("open");
+}
+
+/* SEARCH */
+function searchProducts(text){
+  let filtered = products.filter(p =>
+    p.name.toLowerCase().includes(text.toLowerCase())
+  );
+  displayProducts(filtered);
+}
+
+/* CHECKOUT */
+function openCheckout(){
+  if(cart.length === 0) return alert("Cart is empty");
+  checkoutBox.style.display = "block";
+}
+
+function closeCheckout(){
+  checkoutBox.style.display = "none";
+}
+
+function placeOrder(){
+  let name = document.getElementById("name").value;
+  let phone = document.getElementById("phone").value;
+  let address = document.getElementById("address").value;
+  let delivery = parseInt(document.getElementById("delivery").value);
+
+  let total=0;
+  let message = `Hello CODEDSTORE,%0AName:${name}%0APhone:${phone}%0AAddress:${address}%0A%0AOrder:%0A`;
+
+  cart.forEach(p=>{
+    message += `${p.name} x${p.qty} - ₦${p.price*p.qty}%0A`;
+    total += p.price * p.qty;
+  });
+
+  total += delivery;
+
+  message += `%0ADelivery: ₦${delivery}%0ATotal: ₦${total}`;
+
+  window.open(`https://wa.me/2348114707032?text=${message}`);
+}
+
+/* INIT */
+displayProducts(products);
+</script>
+
+</body>
 </html>
