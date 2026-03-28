@@ -1,304 +1,517 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CODEDSTORE</title>
-
-<style>
-body { margin:0; font-family:Arial; background:#f5f5f5; }
-
-header {
-  background:black;
-  color:white;
-  text-align:center;
-  padding:20px;
-}
-
-.search {
-  width:90%;
-  margin:10px auto;
-  display:block;
-  padding:12px;
-  border-radius:10px;
-  border:none;
-}
-
-/* PRODUCTS */
-.products {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  padding:10px;
-}
-
-.card {
-  background:white;
-  padding:10px;
-  border-radius:12px;
-}
-
-.card img {
-  width:100%;
-  height:140px;
-  object-fit:cover;
-  border-radius:10px;
-}
-
-button {
-  background:orange;
-  border:none;
-  padding:10px;
-  width:100%;
-  border-radius:8px;
-  color:white;
-  margin-top:5px;
-}
-
-/* CART BUTTON */
-.cart-btn {
-  position:fixed;
-  top:15px;
-  right:15px;
-  background:orange;
-  padding:10px 15px;
-  border-radius:30px;
-  color:white;
-  cursor:pointer;
-}
-
-#cartCount {
-  background:red;
-  padding:2px 8px;
-  border-radius:50%;
-  margin-left:5px;
-}
-
-/* CART PANEL */
-.cart {
-  position:fixed;
-  bottom:-100%;
-  left:0;
-  width:100%;
-  height:65%;
-  background:black;
-  color:white;
-  padding:15px;
-  transition:0.3s;
-  overflow:auto;
-}
-
-.cart.open { bottom:0; }
-
-.close-btn {
-  background:red;
-  padding:5px 10px;
-  border:none;
-  border-radius:5px;
-  color:white;
-  float:right;
-}
-
-.cart-item {
-  margin:10px 0;
-  border-bottom:1px solid #444;
-  padding-bottom:8px;
-}
-
-.qty-btn {
-  background:orange;
-  border:none;
-  padding:5px 10px;
-  margin:3px;
-  border-radius:5px;
-}
-
-/* CHECKOUT */
-.checkout {
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:white;
-  display:none;
-  padding:20px;
-}
-
-input, select {
-  width:100%;
-  padding:10px;
-  margin:5px 0;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rockview Hotel Apapa | Luxury Stays in Lagos</title>
+    <meta name="description" content="Experience comfort and exceptional hospitality at Rockview Hotel Apapa. Premium rooms, fine dining, and easy access to Apapa attractions.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a3c34;
+            --accent: #d4af37;
+            --light: #f8f5f0;
+            --dark: #111;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: #fff;
+        }
+        
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid #eee;
+        }
+        
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .logo span { color: var(--accent); }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+        }
+        
+        .nav-links a:hover { color: var(--primary); }
+        
+        .booking-btn {
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .booking-btn:hover {
+            background: var(--accent);
+            color: var(--dark);
+            transform: translateY(-3px);
+        }
+        
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.55)), url('https://picsum.photos/id/1015/2000/1200') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+        }
+        
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.6);
+        }
+        
+        .hero p { font-size: 1.4rem; margin-bottom: 2rem; }
+        
+        .cta-button {
+            background: var(--accent);
+            color: var(--dark);
+            padding: 1rem 2.5rem;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+        
+        section {
+            padding: 100px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 3rem;
+            color: var(--primary);
+        }
+        
+        .attractions-grid, .rooms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+        
+        .attraction-card, .room-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.4s;
+        }
+        
+        .attraction-card:hover, .room-card:hover {
+            transform: translateY(-15px);
+        }
+        
+        .attraction-card img, .room-card img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+        }
+        
+        .card-info {
+            padding: 1.5rem;
+        }
+        
+        .card-info h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .distance {
+            color: var(--accent);
+            font-weight: 600;
+            margin: 0.5rem 0;
+            font-size: 0.95rem;
+        }
+        
+        /* Modal */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 2000; align-items: center; justify-content: center; }
+        .modal-content { background: white; width: 90%; max-width: 520px; border-radius: 16px; max-height: 95vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+        .modal-header { padding: 1.5rem 2rem; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; background: var(--primary); color: white; border-radius: 16px 16px 0 0; }
+        .modal-header h2 { margin: 0; font-size: 1.6rem; }
+        .close { font-size: 1.8rem; cursor: pointer; opacity: 0.8; }
+        .modal-body { padding: 2rem; }
+        .form-group { margin-bottom: 1.2rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px 16px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .submit-btn { background: var(--accent); color: var(--dark); width: 100%; padding: 1rem; font-size: 1.1rem; font-weight: 700; border: none; border-radius: 50px; cursor: pointer; margin-top: 1rem; }
+        
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 4rem 5% 2rem;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 3rem; }
+            .nav-links { display: none; }
+        }
+    </style>
 </head>
-
 <body>
+    <!-- Navigation -->
+    <header>
+        <nav>
+            <a href="#" class="logo">Rockview <span>Hotel</span></a>
+            <ul class="nav-links">
+                <li><a href="#rooms">Rooms</a></li>
+                <li><a href="#dining">Dining</a></li>
+                <li><a href="#facilities">Facilities</a></li>
+                <li><a href="#attractions">Attractions</a></li>
+                <li><a href="#location">Location</a></li>
+            </ul>
+            <button class="booking-btn" onclick="showBookingModal()">Book Now</button>
+        </nav>
+    </header>
 
-<header>
-  <h2>CODEDSTORE</h2>
-  <p>Smart Tech. Smart Living.</p>
-</header>
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Welcome to Rockview Hotel Apapa</h1>
+            <p>Elegant comfort in the heart of Apapa, Lagos • Exceptional hospitality awaits you</p>
+            <button class="cta-button" onclick="showBookingModal()">Reserve Your Stay</button>
+        </div>
+    </section>
 
-<input class="search" placeholder="Search products..." oninput="searchProducts(this.value)">
+    <!-- About -->
+    <section id="about">
+        <h2 class="section-title">Discover Rockview Apapa</h2>
+        <p style="max-width: 800px; margin: 0 auto; text-align: center; font-size: 1.2rem;">
+            Located at 17b Park Lane in the bustling business district of Apapa, our hotel blends modern luxury with warm Nigerian hospitality and convenient access to the port and local attractions.
+        </p>
+    </section>
 
-<div class="products" id="productList"></div>
+    <!-- Rooms with visible specific images -->
+    <section id="rooms" style="background: #f8f5f0;">
+        <h2 class="section-title">Our Rooms & Suites</h2>
+        <div class="rooms-grid">
+            <div class="room-card">
+                <img src="https://picsum.photos/id/1015/600/400" alt="Deluxe Room">
+                <div class="card-info">
+                    <h3>Deluxe Room</h3>
+                    <p>Spacious room with king bed, work desk, and city views. Perfect for business or leisure travelers.</p>
+                    <div class="price">₦45,000 <small>/ night</small></div>
+                    <button class="booking-btn" style="margin-top:1rem; width:100%; padding:0.9rem;" onclick="showBookingModal()">Book Now</button>
+                </div>
+            </div>
+            
+            <div class="room-card">
+                <img src="https://picsum.photos/id/106/600/400" alt="Executive Suite">
+                <div class="card-info">
+                    <h3>Executive Suite</h3>
+                    <p>Living area, separate bedroom, and private balcony with excellent views.</p>
+                    <div class="price">₦85,000 <small>/ night</small></div>
+                    <button class="booking-btn" style="margin-top:1rem; width:100%; padding:0.9rem;" onclick="showBookingModal()">Book Now</button>
+                </div>
+            </div>
+            
+            <div class="room-card">
+                <img src="https://picsum.photos/id/201/600/400" alt="Presidential Suite">
+                <div class="card-info">
+                    <h3>Presidential Suite</h3>
+                    <p>Ultimate luxury with panoramic views, premium amenities, and spacious living areas.</p>
+                    <div class="price">₦150,000 <small>/ night</small></div>
+                    <button class="booking-btn" style="margin-top:1rem; width:100%; padding:0.9rem;" onclick="showBookingModal()">Book Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- CART BUTTON -->
-<div class="cart-btn" onclick="toggleCart()">
-🛒 <span id="cartCount">0</span>
-</div>
+    <!-- Facilities -->
+    <section id="facilities">
+        <h2 class="section-title">Facilities & Amenities</h2>
+        <div style="justify-content: center; max-width: 1000px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 1.5rem; font-size: 1.05rem;">
+            <div class="amenity"><i class="fas fa-swimmer" style="color:var(--accent);"></i> Swimming Pool</div>
+            <div class="amenity"><i class="fas fa-dumbbell" style="color:var(--accent);"></i> Fitness Center</div>
+            <div class="amenity"><i class="fas fa-utensils" style="color:var(--accent);"></i> Restaurant & Bar</div>
+            <div class="amenity"><i class="fas fa-spa" style="color:var(--accent);"></i> Spa & Wellness</div>
+            <div class="amenity"><i class="fas fa-wifi" style="color:var(--accent);"></i> High-Speed WiFi</div>
+            <div class="amenity"><i class="fas fa-car" style="color:var(--accent);"></i> Free Parking</div>
+            <div class="amenity"><i class="fas fa-concierge-bell" style="color:var(--accent);"></i> 24/7 Concierge</div>
+        </div>
+    </section>
 
-<!-- CART -->
-<div class="cart" id="cartBox">
-  <button class="close-btn" onclick="toggleCart()">Close</button>
-  <h3>Your Cart</h3>
+    <!-- Dining -->
+    <section id="dining" style="background: #f8f5f0;">
+        <h2 class="section-title">Dining at Rockview</h2>
+        <p style="text-align:center; max-width:700px; margin:0 auto 3rem; font-size:1.2rem;">
+            Enjoy authentic Nigerian and international cuisine in our elegant restaurants and poolside bar.
+        </p>
+        <div style="text-align:center;">
+            <img src="https://picsum.photos/id/431/1200/600" alt="Rockview Hotel Restaurant" style="max-width:100%; border-radius:16px; box-shadow:0 10px 40px rgba(0,0,0,0.15);">
+        </div>
+    </section>
 
-  <div id="cartItems"></div>
-  <h3 id="total">Total: ₦0</h3>
+    <!-- Nearby Attractions with visible specific images -->
+    <section id="attractions" style="background: var(--light);">
+        <h2 class="section-title">Nearby Attractions</h2>
+        <p style="text-align:center; max-width:800px; margin:0 auto 3rem; font-size:1.1rem;">
+            Rockview Hotel Apapa offers easy access to a mix of family fun, culture, history, and commerce — all within a short drive.
+        </p>
+        <div class="attractions-grid">
+            <div class="attraction-card">
+                <img src="https://picsum.photos/id/1015/600/400" alt="Apapa Amusement Park">
+                <div class="card-info">
+                    <h3>Apapa Amusement Park</h3>
+                    <div class="distance">≈ 5–10 minutes drive</div>
+                    <p>One of Lagos’ oldest and most loved recreational spots. Enjoy thrilling roller coasters, bumper cars, carousel, mini Ferris wheel, arcade games, and family-friendly rides.</p>
+                </div>
+            </div>
 
-  <button onclick="openCheckout()">Checkout</button>
-</div>
+            <div class="attraction-card">
+                <img src="https://picsum.photos/id/106/600/400" alt="Apapa Port">
+                <div class="card-info">
+                    <h3>Apapa Port (Lagos Port Complex)</h3>
+                    <div class="distance">≈ 10–15 minutes drive</div>
+                    <p>Nigeria’s historic and busiest seaport. Watch giant cargo ships, experience the vibrant maritime atmosphere, and see the bustling operations that power the nation’s trade.</p>
+                </div>
+            </div>
 
-<!-- CHECKOUT -->
-<div class="checkout" id="checkoutBox">
-  <h2>Checkout</h2>
+            <div class="attraction-card">
+                <img src="https://picsum.photos/id/201/600/400" alt="National Theatre">
+                <div class="card-info">
+                    <h3>National Theatre</h3>
+                    <div class="distance">≈ 15–20 minutes drive</div>
+                    <p>Iconic cultural landmark with striking architecture. Home to world-class plays, concerts, dance performances, exhibitions, and Nigerian arts and heritage.</p>
+                </div>
+            </div>
 
-  <input id="name" placeholder="Full Name">
-  <input id="phone" placeholder="Phone Number">
-  <input id="address" placeholder="Delivery Address">
+            <div class="attraction-card">
+                <img src="https://picsum.photos/id/431/600/400" alt="Freedom Park Lagos">
+                <div class="card-info">
+                    <h3>Freedom Park Lagos</h3>
+                    <div class="distance">≈ 15–20 minutes drive</div>
+                    <p>A serene historic park built on the site of a former colonial prison. Features beautiful gardens, sculptures, waterfalls, and a peaceful escape in the heart of the city.</p>
+                </div>
+            </div>
 
-  <select id="delivery">
-    <option value="2000">Lagos Delivery - ₦2000</option>
-    <option value="0">Pickup - Free</option>
-  </select>
+            <div class="attraction-card">
+                <img src="https://picsum.photos/id/870/600/400" alt="Central Mosque of Lagos">
+                <div class="card-info">
+                    <h3>Central Mosque of Lagos</h3>
+                    <div class="distance">≈ 10–15 minutes drive</div>
+                    <p>Stunning architectural landmark and a key religious and cultural site. Admire its impressive design and vibrant spiritual atmosphere.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <button onclick="placeOrder()">Place Order</button>
-  <button onclick="closeCheckout()" style="background:red;">Cancel</button>
-</div>
+    <!-- Location -->
+    <section id="location">
+        <h2 class="section-title">Our Location in Apapa</h2>
+        <p style="text-align:center; max-width:700px; margin:0 auto 2rem; font-size:1.1rem;">
+            17b Park Lane, Apapa, Lagos State, Nigeria<br>
+            Conveniently located near the Apapa Port, business districts, and top local attractions.
+        </p>
+        <div style="background:#eee; height:400px; border-radius:16px; display:flex; align-items:center; justify-content:center; font-size:1.2rem; color:#666;">
+            📍 Interactive Google Maps Embed Would Go Here
+        </div>
+    </section>
 
-<script>
-let products = [
-  {name:"Power Bank", price:18000, img:"Snapchat-350993081.jpg"},
-  {name:"Earbuds", price:12000, img:"Snapchat-350993081.jpg"},
-  {name:"Charger", price:5000, img:"Snapchat-350993081.jpg"},
-  {name:"Smart Watch", price:25000, img:"Snapchat-350993081.jpg"}
-];
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Make a Reservation at Rockview Apapa</h2>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="bookingForm" onsubmit="handleBooking(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="checkin">Check-in Date</label>
+                            <input type="date" id="checkin" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="checkout">Check-out Date</label>
+                            <input type="date" id="checkout" required>
+                        </div>
+                    </div>
 
-let cart = [];
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="adults">Adults</label>
+                            <select id="adults" required>
+                                <option value="1">1 Adult</option>
+                                <option value="2" selected>2 Adults</option>
+                                <option value="3">3 Adults</option>
+                                <option value="4">4 Adults</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="children">Children</label>
+                            <select id="children">
+                                <option value="0">No Children</option>
+                                <option value="1">1 Child</option>
+                                <option value="2">2 Children</option>
+                            </select>
+                        </div>
+                    </div>
 
-/* DISPLAY */
-function displayProducts(list){
-  let html="";
-  list.forEach((p,i)=>{
-    html+=`
-      <div class="card">
-        <img src="${p.img}">
-        <h4>${p.name}</h4>
-        <p>₦${p.price}</p>
-        <button onclick="addToCart(${i})">Add to Cart</button>
-      </div>
-    `;
-  });
-  productList.innerHTML = html;
-}
+                    <div class="form-group">
+                        <label for="roomType">Room Type</label>
+                        <select id="roomType" required>
+                            <option value="">Select Room</option>
+                            <option value="Deluxe Room">Deluxe Room - ₦45,000/night</option>
+                            <option value="Executive Suite">Executive Suite - ₦85,000/night</option>
+                            <option value="Presidential Suite">Presidential Suite - ₦150,000/night</option>
+                        </select>
+                    </div>
 
-/* ADD */
-function addToCart(i){
-  let item = cart.find(p=>p.name===products[i].name);
-  if(item){ item.qty++; }
-  else { cart.push({...products[i], qty:1}); }
-  updateCart();
-}
+                    <div class="form-group">
+                        <label for="fullname">Full Name</label>
+                        <input type="text" id="fullname" placeholder="John Doe" required>
+                    </div>
 
-/* INCREASE */
-function increase(i){
-  cart[i].qty++;
-  updateCart();
-}
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" placeholder="you@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" placeholder="+234 706 118 7297" required>
+                        </div>
+                    </div>
 
-/* DECREASE */
-function decrease(i){
-  if(cart[i].qty > 1) cart[i].qty--;
-  else cart.splice(i,1);
-  updateCart();
-}
+                    <div class="form-group">
+                        <label for="requests">Special Requests (optional)</label>
+                        <textarea id="requests" rows="3" placeholder="Late check-out, port pickup, dietary requirements..."></textarea>
+                    </div>
 
-/* UPDATE CART */
-function updateCart(){
-  let html="";
-  let total=0;
-  let count=0;
+                    <button type="submit" class="submit-btn">Submit Booking Request</button>
+                    <p style="text-align:center; margin-top:1rem; font-size:0.9rem; color:#666;">
+                        We will confirm your booking via email or WhatsApp shortly.
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
 
-  cart.forEach((p,i)=>{
-    total += p.price * p.qty;
-    count += p.qty;
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div>
+                <h3 style="color:var(--accent);">Rockview Hotel Apapa</h3>
+                <p>17b Park Lane, Apapa, Lagos State, Nigeria</p>
+            </div>
+            <div>
+                <h4>Contact Us</h4>
+                <p><i class="fas fa-phone"></i> +234 706 118 7297</p>
+                <p><i class="fas fa-whatsapp"></i> +234 902 019 9991</p>
+                <p><i class="fas fa-envelope"></i> reservationsapapa@rockviewhotelsltd.com</p>
+            </div>
+            <div>
+                <h4>Check-in / Check-out</h4>
+                <p>Check-in: 1:00 PM<br>Check-out: 12:00 Noon</p>
+            </div>
+        </div>
+        <div style="text-align:center; margin-top:3rem; opacity:0.7; font-size:0.9rem;">
+            &copy; 2026 Rockview Hotel Apapa. All rights reserved.
+        </div>
+    </footer>
 
-    html+=`
-      <div class="cart-item">
-        ${p.name}<br>
-        ₦${p.price} x ${p.qty} = ₦${p.price*p.qty}<br>
+    <script>
+        const modal = document.getElementById('bookingModal');
 
-        <button class="qty-btn" onclick="increase(${i})">+</button>
-        <button class="qty-btn" onclick="decrease(${i})">-</button>
-      </div>
-    `;
-  });
+        function showBookingModal() {
+            modal.style.display = 'flex';
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('checkin').min = today;
+            document.getElementById('checkout').min = today;
+        }
 
-  cartItems.innerHTML = html || "Cart is empty";
-  totalText = "Total: ₦" + total;
-  document.getElementById("total").innerText = totalText;
+        function closeModal() {
+            modal.style.display = 'none';
+        }
 
-  document.getElementById("cartCount").innerText = count;
-}
+        function handleBooking(e) {
+            e.preventDefault();
+            const fullname = document.getElementById('fullname').value;
+            const roomType = document.getElementById('roomType').value;
+            const checkin = document.getElementById('checkin').value;
+            const checkout = document.getElementById('checkout').value;
+            const phone = document.getElementById('phone').value;
 
-/* TOGGLE CART */
-function toggleCart(){
-  cartBox.classList.toggle("open");
-}
+            if (!roomType) {
+                alert("Please select a room type.");
+                return;
+            }
 
-/* SEARCH */
-function searchProducts(text){
-  let filtered = products.filter(p =>
-    p.name.toLowerCase().includes(text.toLowerCase())
-  );
-  displayProducts(filtered);
-}
+            alert(`Thank you, ${fullname}!\n\nYour booking request for ${roomType} from ${checkin} to ${checkout} at Rockview Hotel Apapa has been received.\n\nWe will contact you shortly on ${phone}.`);
+            closeModal();
+            document.getElementById('bookingForm').reset();
+        }
 
-/* CHECKOUT */
-function openCheckout(){
-  if(cart.length === 0) return alert("Cart is empty");
-  checkoutBox.style.display = "block";
-}
+        window.onclick = function(event) {
+            if (event.target === modal) closeModal();
+        }
 
-function closeCheckout(){
-  checkoutBox.style.display = "none";
-}
+        document.addEventListener('keydown', function(e) {
+            if (e.key === "Escape" && modal.style.display === "flex") closeModal();
+        });
 
-function placeOrder(){
-  let name = document.getElementById("name").value;
-  let phone = document.getElementById("phone").value;
-  let address = document.getElementById("address").value;
-  let delivery = parseInt(document.getElementById("delivery").value);
-
-  let total=0;
-  let message = `Hello CODEDSTORE,%0AName:${name}%0APhone:${phone}%0AAddress:${address}%0A%0AOrder:%0A`;
-
-  cart.forEach(p=>{
-    message += `${p.name} x${p.qty} - ₦${p.price*p.qty}%0A`;
-    total += p.price * p.qty;
-  });
-
-  total += delivery;
-
-  message += `%0ADelivery: ₦${delivery}%0ATotal: ₦${total}`;
-
-  window.open(`https://wa.me/2348114707032?text=${message}`);
-}
-
-/* INIT */
-displayProducts(products);
-</script>
-
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                if (this.getAttribute('href') !== '#') {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
 </body>
-</html>
+  </html>
